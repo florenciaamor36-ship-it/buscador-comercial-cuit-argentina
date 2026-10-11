@@ -2,6 +2,9 @@ plugins {
     id 'com.android.application'
 }
 
+def stableKeystorePath = System.getenv('BUSCADOR_SIGNING_KEYSTORE')
+def stableKeystorePassword = System.getenv('BUSCADOR_SIGNING_STORE_PASSWORD')
+
 android {
     namespace 'ar.laclave.buscador'
     compileSdk 35
@@ -17,6 +20,23 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
+    }
+
+    if (stableKeystorePath && stableKeystorePassword) {
+        signingConfigs {
+            stable {
+                storeFile file(stableKeystorePath)
+                storePassword stableKeystorePassword
+                keyAlias 'buscador-stable'
+                keyPassword stableKeystorePassword
+                storeType 'PKCS12'
+            }
+        }
+        buildTypes {
+            debug {
+                signingConfig signingConfigs.stable
+            }
+        }
     }
 }
 

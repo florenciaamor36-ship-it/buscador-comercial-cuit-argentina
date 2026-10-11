@@ -34,7 +34,18 @@ jobs:
         with:
           gradle-version: '8.10.2'
 
+      - name: Prepare stable APK signing key
+        env:
+          BUSCADOR_SIGNING_KEYSTORE_B64: ${{ secrets.BUSCADOR_SIGNING_KEYSTORE_B64 }}
+        run: |
+          test -n "$BUSCADOR_SIGNING_KEYSTORE_B64"
+          printf '%s' "$BUSCADOR_SIGNING_KEYSTORE_B64" | base64 --decode > "$RUNNER_TEMP/buscador-signing.p12"
+          chmod 600 "$RUNNER_TEMP/buscador-signing.p12"
+          printf 'BUSCADOR_SIGNING_KEYSTORE=%s\n' "$RUNNER_TEMP/buscador-signing.p12" >> "$GITHUB_ENV"
+
       - name: Build installable debug APK
+        env:
+          BUSCADOR_SIGNING_STORE_PASSWORD: ${{ secrets.BUSCADOR_SIGNING_STORE_PASSWORD }}
         run: gradle --no-daemon -p android :app:assembleDebug
 
       - name: Upload APK artifact
@@ -43,3 +54,7 @@ jobs:
           name: buscador-comercial-pro-debug
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
+
+      - name: Remove signing keystore
+        if: always()
+        run: rm -f "$RUNNER_TEMP/buscador-signing.p12"

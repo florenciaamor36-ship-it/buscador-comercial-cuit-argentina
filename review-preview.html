@@ -8,18 +8,21 @@
     <link rel="icon" type="image/webp" sizes="192x192" href="./buscador-favicon.webp">
     <link rel="apple-touch-icon" href="./buscador-favicon.png">
     <meta name="theme-color" content="#080d20">
-    <!-- Tailwind CSS v4: versión fijada e integridad verificada -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3" integrity="sha384-aJ9rL4k6lF+91guGvUFVSkpIcge7Zd9EiI4TQDLoK9kFaFJgKHgjEXVvG/qA5COj" crossorigin="anonymous"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Sanitizador para texto generado por IA y Markdown -->
-    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js" integrity="sha384-a7SzOxErzJ3ZpQz0zJ32d67dSitNzPcbfybc/ykU9KJhMgZkwqfSxlhhdJRS+XGL" crossorigin="anonymous"></script>
-    <!-- Marked.js fijado; el HTML generado se sanitiza antes de mostrarlo -->
-    <script src="https://cdn.jsdelivr.net/npm/marked@18.1.0/lib/marked.umd.js" integrity="sha384-IvVdUXkhyoD0shbjhiiOnuiTbervTaB0VJcnEcg3shUAMVOOF6lKj4ozJrCwvz6s" crossorigin="anonymous"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS precompilado localmente para mantener el diseño sin depender de CDN -->
+    <link rel="stylesheet" href="./buscador-tailwind.css">
+    <!-- Iconos, sanitizador y Markdown empaquetados localmente -->
+    <link rel="stylesheet" href="./fontawesome/css/all.min.css">
+    <script src="./vendor/dompurify.min.js"></script>
+    <script src="./vendor/marked.umd.js"></script>
     <style>
-        * { font-family: 'Plus Jakarta Sans', sans-serif; }
+        @font-face {
+            font-family: 'Plus Jakarta Sans';
+            font-style: normal;
+            font-weight: 400 800;
+            font-display: swap;
+            src: url('./fonts/plus-jakarta-sans-latin.woff2') format('woff2');
+        }
+        * { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
         html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
         
         /* Tema Oscuro Glassmorphism */
