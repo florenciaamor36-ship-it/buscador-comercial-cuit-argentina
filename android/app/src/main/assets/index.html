@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="es" id="htmlTag" class="h-full bg-slate-950 text-slate-100 transition-colors duration-300 dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Buscador Comercial & Auditoría Fiscal Argentina PRO ULTRA</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2212%22 fill=%22%230f172a%22/%3E%3Cpath d=%22M12 52V25l20-13 20 13v27H38V36H26v16z%22 fill=%22%23fbbf24%22/%3E%3C/svg%3E">
+    <!-- Tailwind CSS v4: versión fijada e integridad verificada -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3" integrity="sha384-aJ9rL4k6lF+91guGvUFVSkpIcge7Zd9EiI4TQDLoK9kFaFJgKHgjEXVvG/qA5COj" crossorigin="anonymous"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Sanitizador para texto generado por IA y Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js" integrity="sha384-a7SzOxErzJ3ZpQz0zJ32d67dSitNzPcbfybc/ykU9KJhMgZkwqfSxlhhdJRS+XGL" crossorigin="anonymous"></script>
+    <!-- Marked.js fijado; el HTML generado se sanitiza antes de mostrarlo -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@18.1.0/lib/marked.umd.js" integrity="sha384-IvVdUXkhyoD0shbjhiiOnuiTbervTaB0VJcnEcg3shUAMVOOF6lKj4ozJrCwvz6s" crossorigin="anonymous"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        /* Tema Oscuro Glassmorphism */
+        .dark {
+            background-color: #030712 !important;
+            color: #f3f4f6 !important;
+        }
+        .dark .glass-panel {
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.85);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: #f1f5f9;
+        }
+        .dark .input-box {
+            background-color: #030712 !important;
+            color: #ffffff !important;
+            border-color: rgba(99, 102, 241, 0.4) !important;
+        }
+        .dark .modal-box {
+            background-color: #0f172a !important;
+            color: #f8fafc !important;
+            border-color: rgba(99, 102, 241, 0.3) !important;
+        }
+
+        /* Tema Claro Profesional */
+        .light {
+            background-color: #f8fafc !important;
+            color: #0f172a !important;
+        }
+        .light .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+        .light .glass-card {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: #0f172a;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .light .input-box {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+            border-color: #cbd5e1 !important;
+        }
+        .light .modal-box {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+            border-color: #e2e8f0 !important;
+        }
+        .light .text-white { color: #0f172a !important; }
+        .light .text-slate-300, .light .text-slate-200 { color: #334155 !important; }
+        .light .text-indigo-300 { color: #4338ca !important; }
+
+        .glow-button {
+            box-shadow: 0 0 25px rgba(79, 70, 229, 0.45);
+        }
+        .glow-button:hover {
+            box-shadow: 0 0 35px rgba(99, 102, 241, 0.75);
+        }
+        .custom-scroll::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.1);
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.5);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-full flex flex-col justify-between antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-indigo-500/20 shadow-xl transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col sm:flex-row justify-between items-center gap-3">
+            
+            <div class="flex items-center justify-between w-full sm:w-auto">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-400 via-indigo-600 to-cyan-400 p-0.5 shadow-lg shadow-indigo-500/30">
+                        <div class="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
+                            <i class="fa-solid fa-building-circle-check text-amber-400 text-lg"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-extrabold tracking-tight bg-gradient-to-r from-amber-400 via-indigo-200 to-cyan-300 bg-clip-text text-transparent">
+                            CUIT & Business Intelligence <span class="text-xs px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-semibold ml-1">ULTRA</span>
+                        </h1>
+                        <p class="text-xs text-indigo-300/80 hidden sm:block">Motor de Búsqueda Comercial en Tiempo Real con Búsqueda Web</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <!-- Theme Toggle Button -->
+                    <button onclick="toggleTheme()" class="p-2.5 rounded-xl bg-indigo-900/40 border border-indigo-500/30 text-amber-400 hover:text-white transition cursor-pointer" title="Cambiar Modo Claro/Oscuro">
+                        <i id="themeIcon" class="fa-solid fa-moon"></i>
+                    </button>
+                    <!-- Mobile Settings Toggle -->
+                    <button onclick="toggleMobileConfig()" class="sm:hidden p-2.5 rounded-lg bg-indigo-900/50 border border-indigo-500/30 text-indigo-300 hover:text-white">
+                        <i class="fa-solid fa-key text-sm"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Config Panel (secure proxy access + model options) -->
+            <div id="apiConfigPanel" class="w-full sm:w-auto hidden sm:flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 modal-box p-3 sm:p-1.5 rounded-xl border border-indigo-500/30">
+                <div class="flex items-center gap-2 px-1 text-indigo-300 text-xs font-semibold">
+                    <i class="fa-solid fa-key text-amber-400"></i>
+                    <span>Código de acceso:</span>
+                </div>
+                <div class="w-full sm:w-52">
+                    <input type="password" id="proxyAccessCode" autocomplete="off" spellcheck="false" placeholder="Ingresá el código de acceso..." class="w-full px-3 py-1.5 text-xs rounded-lg input-box focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <p class="mt-1 text-[10px] text-slate-400">Se usa solo durante esta sesión; no se guarda.</p>
+                </div>
+                
+                <div class="flex items-center gap-2">
+                    <select id="modelSelect" class="input-box text-xs px-2.5 py-1.5 rounded-lg focus:outline-none">
+                        <option value="gemini-2.5-flash">Gemini 2.5 Flash (Súper Rápido)</option>
+                        <option value="gemini-2.5-pro">Gemini 2.5 Pro (Análisis Completo)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+
+        <!-- Hero Card & Search Input -->
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-950 via-purple-950 to-slate-900 border border-indigo-500/30 shadow-2xl p-5 sm:p-8">
+            <div class="absolute -top-24 -right-24 w-72 h-72 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 max-w-3xl space-y-3">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-200 text-xs font-semibold uppercase tracking-wider">
+                    <i class="fa-solid fa-globe text-amber-400"></i> Conectado a Google Search Grounding (Búsqueda en Vivo)
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-black text-white leading-tight">
+                    Buscador de Empresas, Razón Social y CUIT en Argentina
+                </h2>
+                <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+                    Escribí cualquier rubro o zona. La aplicación consulta la web para encontrar empresas, razones sociales, CUIT, direcciones y teléfonos.
+                </p>
+                <p class="text-xs text-amber-200/90" role="note">
+                    La IA puede equivocarse; esto no es una validación oficial de ARCA. Verificá los datos fiscales en una fuente oficial antes de usarlos.
+                </p>
+            </div>
+
+            <!-- Filtros Rápidos -->
+            <div class="mt-6 pt-4 border-t border-indigo-500/20 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs font-bold text-indigo-200 mb-1"><i class="fa-solid fa-map-location-dot text-amber-400"></i> Provincia / Zona:</label>
+                    <select id="selectProvincia" onchange="actualizarConsultaFiltros()" class="w-full px-3 py-2 rounded-xl input-box text-xs focus:outline-none focus:border-amber-400">
+                        <option value="">Todas las Zonas / Escribir libremente</option>
+                        <option value="Buenos Aires">Buenos Aires (Provincia)</option>
+                        <option value="CABA (Capital Federal)">CABA (Capital Federal)</option>
+                        <option value="Mar del Plata">Mar del Plata / Costa Atlántica</option>
+                        <option value="Córdoba">Córdoba</option>
+                        <option value="Santa Fe (Rosario)">Santa Fe / Rosario</option>
+                        <option value="Mendoza">Mendoza</option>
+                        <option value="Tucumán">Tucumán</option>
+                        <option value="Patagonia (Bariloche, Neuquén)">Patagonia</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-indigo-200 mb-1"><i class="fa-solid fa-industry text-amber-400"></i> Rubro Comercial:</label>
+                    <select id="selectRubro" onchange="actualizarConsultaFiltros()" class="w-full px-3 py-2 rounded-xl input-box text-xs focus:outline-none focus:border-amber-400">
+                        <option value="">Todos los Rubros / Escribir libremente</option>
+                        <option value="Comidas rápidas y Gastronomía">Gastronomía y Comidas Rápidas</option>
+                        <option value="Concesionarias y Automotor">Automotor y Concesionarias</option>
+                        <option value="Servicios de Tecnología e Internet">Tecnología e Internet</option>
+                        <option value="Construcción y Ferreterías">Construcción y Ferreterías</option>
+                        <option value="Supermercados y Distribuidores">Distribuidores y Supermercados</option>
+                        <option value="Indumentaria y Calzado">Indumentaria y Moda</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Search Form Bar -->
+            <div class="mt-4 pt-3 space-y-3">
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <div class="relative flex-grow">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-indigo-400">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <input type="text" id="searchInput" placeholder="Ej: Pizzerías en Mar del Plata, Empresas de transporte en Córdoba..." 
+                            class="w-full pl-11 pr-4 py-3.5 text-sm sm:text-base rounded-xl input-box border-2 border-indigo-500/40 focus:outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-400/25 transition-all shadow-inner">
+                    </div>
+                    <button onclick="buscarEmpresas()" id="searchBtn" 
+                        class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-amber-500 hover:from-indigo-500 hover:to-amber-400 text-white font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-lg glow-button active:scale-95">
+                        <i class="fa-solid fa-rocket"></i>
+                        <span>Buscar Datos</span>
+                    </button>
+                </div>
+
+                <!-- Historial Reciente -->
+                <div id="searchHistoryContainer" class="hidden flex flex-wrap items-center gap-2 pt-2">
+                    <span class="text-xs text-indigo-300 font-semibold flex items-center gap-1"><i class="fa-solid fa-clock-rotate-left"></i> Recientes:</span>
+                    <div id="historyChips" class="flex flex-wrap gap-2"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loading" class="hidden my-12">
+            <div class="glass-panel rounded-2xl p-8 sm:p-12 text-center max-w-md mx-auto space-y-4 border border-indigo-500/40 shadow-2xl">
+                <div class="relative w-16 h-16 mx-auto">
+                    <div class="absolute inset-0 rounded-full border-4 border-indigo-500/20"></div>
+                    <div class="absolute inset-0 rounded-full border-4 border-amber-400 border-t-transparent animate-spin"></div>
+                    <i class="fa-solid fa-globe absolute inset-0 flex items-center justify-center text-indigo-400 text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white">Buscando empresas en tiempo real...</h3>
+                    <p class="text-xs text-indigo-300 mt-1">Google Search Grounding está consultando sitios web y padrones públicos...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Container -->
+        <div id="resultsContainer" class="hidden space-y-5">
+            
+            <!-- Controls Bar: Filter + Count + Actions -->
+            <div class="glass-panel p-4 rounded-xl flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <h3 class="text-lg font-extrabold text-white">Empresas Encontradas</h3>
+                    <span id="badgeCount" class="px-2.5 py-0.5 rounded-full bg-indigo-500/30 text-indigo-200 text-xs font-bold border border-indigo-400/30">0</span>
+                </div>
+
+                <!-- Live Internal Filter Input -->
+                <div class="relative flex-grow max-w-md">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <i class="fa-solid fa-filter text-xs"></i>
+                    </div>
+                    <input type="text" id="internalFilter" oninput="filtrarResultadosLocales()" placeholder="Filtrar por nombre, dirección, CUIT..." 
+                        class="w-full pl-9 pr-4 py-2 text-xs rounded-lg input-box focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="compararEmpresasSeleccionadas()" class="px-3 py-2 rounded-lg bg-purple-600/80 hover:bg-purple-600 text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow">
+                        <i class="fa-solid fa-code-compare"></i>
+                        <span>Comparar Seleccionadas</span>
+                    </button>
+                    <button onclick="copiarTodosLosDatos()" class="px-3 py-2 rounded-lg bg-indigo-600/80 hover:bg-indigo-600 text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow">
+                        <i class="fa-solid fa-copy"></i>
+                        <span>Copiar Todo</span>
+                    </button>
+                    <button onclick="exportarCSV()" class="px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition flex items-center gap-2 shadow-lg shadow-emerald-900/40 cursor-pointer active:scale-95">
+                        <i class="fa-solid fa-file-excel"></i>
+                        <span>Excel</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- VISTA A: Mobile Cards -->
+            <div id="mobileCardsView" class="block lg:hidden space-y-3"></div>
+
+            <!-- VISTA B: Desktop Table -->
+            <div id="desktopTableView" class="hidden lg:block glass-panel rounded-xl overflow-hidden border border-indigo-500/30 shadow-2xl">
+                <div class="overflow-x-auto custom-scroll">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-slate-900/90 text-indigo-300 uppercase text-xs font-bold tracking-wider border-b border-indigo-500/30">
+                            <tr>
+                                <th class="px-3 py-4 text-center"><i class="fa-solid fa-check"></i></th>
+                                <th class="px-5 py-4"><i class="fa-solid fa-store text-amber-400 mr-2"></i>Nombre Comercial</th>
+                                <th class="px-5 py-4"><i class="fa-solid fa-id-card text-indigo-400 mr-2"></i>Razón Social</th>
+                                <th class="px-5 py-4"><i class="fa-solid fa-hashtag text-cyan-400 mr-2"></i>CUIT</th>
+                                <th class="px-5 py-4"><i class="fa-solid fa-location-dot text-rose-400 mr-2"></i>Dirección</th>
+                                <th class="px-5 py-4"><i class="fa-solid fa-phone text-emerald-400 mr-2"></i>Teléfono</th>
+                                <th class="px-5 py-4 text-center"><i class="fa-solid fa-sliders text-indigo-400 mr-1"></i>Acciones & CRM</th>
+                            </tr>
+                        </thead>
+                        <tbody id="desktopTableBody" class="divide-y divide-indigo-500/10 text-sm text-slate-200"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Fuentes retornadas por Google Search Grounding -->
+            <div id="sourcesPanel" class="hidden glass-panel p-4 rounded-xl border border-indigo-500/30 space-y-2">
+                <h4 class="text-sm font-bold text-indigo-200"><i class="fa-solid fa-link mr-1"></i> Fuentes de la búsqueda</h4>
+                <div id="sourcesList" class="flex flex-wrap gap-2 text-xs"></div>
+                <p class="text-[10px] text-slate-400">Las fuentes ayudan a revisar los resultados; no equivalen a una validación oficial de datos fiscales.</p>
+            </div>
+
+            <!-- Raw Fallback -->
+            <div id="rawResponse" class="hidden glass-panel p-5 rounded-xl space-y-2 border border-amber-500/30">
+                <h4 class="font-bold text-amber-400 text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Respuesta en Texto Bruto:
+                </h4>
+                <div id="rawTextContent" class="text-xs text-slate-300 whitespace-pre-line font-mono modal-box p-4 rounded-lg border border-slate-800"></div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- MODAL 1: INFORME EJECUTIVO -->
+    <div id="reportModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass-panel modal-box w-full max-w-3xl rounded-2xl border border-indigo-500/40 shadow-2xl flex flex-col max-h-[90vh] overflow-hidden">
+            <div class="px-6 py-4 bg-slate-900/90 border-b border-indigo-500/30 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
+                        <i class="fa-solid fa-file-shield text-sm"></i>
+                    </div>
+                    <div>
+                        <h3 id="modalEmpresaTitle" class="text-base font-extrabold text-white">Informe Ejecutivo</h3>
+                        <p class="text-[11px] text-indigo-300">Auditoría comercial y fiscal en tiempo real</p>
+                    </div>
+                </div>
+                <button onclick="cerrarModalInforme()" class="p-2 rounded-lg bg-slate-800/80 text-slate-300 hover:text-white transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div id="modalBodyContent" class="p-6 overflow-y-auto custom-scroll space-y-4 text-sm">
+                <div id="reportLoadingState" class="text-center py-12 space-y-3">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-amber-400 border-t-transparent"></div>
+                    <p class="text-xs text-indigo-300 font-medium">Investigando y redactando informe ejecutivo de la empresa...</p>
+                </div>
+                <div id="reportTextResult" class="hidden space-y-4 text-xs sm:text-sm leading-relaxed modal-box p-5 rounded-xl border border-indigo-500/20"></div>
+            </div>
+            <div class="px-6 py-4 bg-slate-900/90 border-t border-indigo-500/30 flex justify-between items-center">
+                <button onclick="copiarInformeActual()" class="px-4 py-2 rounded-xl bg-indigo-900/80 text-indigo-200 text-xs font-bold transition flex items-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-copy"></i> Copiar
+                </button>
+                <button onclick="descargarInformeArchivo()" class="px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold transition flex items-center gap-2 cursor-pointer shadow-lg">
+                    <i class="fa-solid fa-download"></i> Descargar (.txt)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: NOTAS CRM Y SEGUIMIENTO PERSONAL -->
+    <div id="crmModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass-panel modal-box w-full max-w-lg rounded-2xl border border-indigo-500/40 shadow-2xl flex flex-col overflow-hidden">
+            <div class="px-6 py-4 bg-slate-900/90 border-b border-indigo-500/30 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-pen-to-square text-amber-400 text-lg"></i>
+                    <div>
+                        <h3 id="crmModalTitle" class="text-base font-extrabold text-white">Notas CRM</h3>
+                        <p class="text-[11px] text-indigo-300">Guardá el historial de contactos y seguimiento</p>
+                    </div>
+                </div>
+                <button onclick="cerrarModalCRM()" class="p-2 rounded-lg bg-slate-800/80 text-slate-300 hover:text-white transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <p class="text-xs text-slate-300">Escribí tus observaciones personales, fechas de reunión o detalles de contacto para esta empresa:</p>
+                <textarea id="crmNotesArea" rows="6" placeholder="Ej: Llamar el lunes al dueño, coordinar propuesta comercial, ofrecer servicio de wifi..." 
+                    class="w-full p-3.5 text-xs rounded-xl input-box border border-indigo-500/30 focus:outline-none focus:ring-2 focus:ring-amber-400"></textarea>
+            </div>
+            <div class="px-6 py-4 bg-slate-900/90 border-t border-indigo-500/30 flex justify-end gap-3">
+                <button onclick="cerrarModalCRM()" class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold">Cancelar</button>
+                <button onclick="guardarNotaCRM()" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold shadow-lg cursor-pointer">
+                    <i class="fa-solid fa-floppy-disk mr-1"></i> Guardar Nota
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: COMPARATIVA MULTI-EMPRESA CON IA -->
+    <div id="compareModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass-panel modal-box w-full max-w-4xl rounded-2xl border border-purple-500/40 shadow-2xl flex flex-col max-h-[90vh] overflow-hidden">
+            <div class="px-6 py-4 bg-slate-900/90 border-b border-purple-500/30 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-code-compare text-purple-400 text-lg"></i>
+                    <div>
+                        <h3 class="text-base font-extrabold text-white">Análisis Comparativo de Mercado</h3>
+                        <p class="text-[11px] text-purple-300">Cuadro comparativo generado por IA</p>
+                    </div>
+                </div>
+                <button onclick="cerrarModalCompare()" class="p-2 rounded-lg bg-slate-800/80 text-slate-300 hover:text-white transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto custom-scroll space-y-4">
+                <div id="compareLoadingState" class="text-center py-12 space-y-3">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-purple-400 border-t-transparent"></div>
+                    <p class="text-xs text-purple-300 font-medium">Analizando y comparando las empresas seleccionadas...</p>
+                </div>
+                <div id="compareTextResult" class="hidden space-y-4 text-xs sm:text-sm leading-relaxed modal-box p-5 rounded-xl border border-purple-500/20 font-sans"></div>
+            </div>
+            <div class="px-6 py-4 bg-slate-900/90 border-t border-purple-500/30 flex justify-end">
+                <button onclick="cerrarModalCompare()" class="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold cursor-pointer">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Popup -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-emerald-600 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-emerald-400/40 text-sm font-bold">
+        <i class="fa-solid fa-circle-check text-lg"></i>
+        <span id="toastMsg">¡Acción realizada con éxito!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="glass-panel border-t border-indigo-500/20 mt-12 py-6 text-center text-xs text-indigo-300/60">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <p>La Clave Argentina &copy; 2026 - Buscador Comercial & CRM Enterprise ULTRA</p>
+            <p class="flex items-center gap-1.5">
+                <span>GitHub Pages Ready</span>
+                <i class="fa-solid fa-heart text-rose-500"></i>
+            </p>
+        </div>
+    </footer>
+
+    <!-- App Logic -->
+    <script src="config.js"></script>
+    <script>
+        let datosActuales = [];
+        let datosFiltrados = [];
+        let empresasSeleccionadas = new Set();
+        let informeActualTexto = "";
+        let empresaActualNombre = "";
+        let crmEmpresaKey = "";
+
+        function leerLocalStorage(clave, valorPredeterminado = null) {
+            try {
+                const valor = localStorage.getItem(clave);
+                return valor === null ? valorPredeterminado : valor;
+            } catch (_) {
+                return valorPredeterminado;
+            }
+        }
+
+        function guardarLocalStorage(clave, valor) {
+            try { localStorage.setItem(clave, valor); return true; }
+            catch (_) { return false; }
+        }
+
+        function borrarLocalStorage(clave) {
+            try { localStorage.removeItem(clave); } catch (_) {}
+        }
+
+        function leerJsonLocalStorage(clave, valorPredeterminado) {
+            const valor = leerLocalStorage(clave, null);
+            if (valor === null) return valorPredeterminado;
+            try { return JSON.parse(valor); }
+            catch (_) { return valorPredeterminado; }
+        }
+
+        function escapeHtml(valor) {
+            return String(valor ?? '').replace(/[&<>"']/g, caracter => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            })[caracter]);
+        }
+
+        function textoSeguro(valor) {
+            return typeof valor === 'string' || typeof valor === 'number' ? String(valor) : '';
+        }
+
+        function normalizarEmpresa(item) {
+            if (!item || typeof item !== 'object' || Array.isArray(item)) return null;
+            return {
+                nombre_comercial: textoSeguro(item.nombre_comercial),
+                razon_social: textoSeguro(item.razon_social),
+                cuit: textoSeguro(item.cuit),
+                direccion: textoSeguro(item.direccion),
+                telefono: textoSeguro(item.telefono),
+                sitio_web: textoSeguro(item.sitio_web)
+            };
+        }
+
+        function parseJsonArray(texto) {
+            const limpio = String(texto || '').replace(/```(?:json)?/gi, '').trim();
+            const inicio = limpio.indexOf('[');
+            if (inicio < 0) throw new Error('No se encontró un arreglo JSON.');
+            let profundidad = 0, enCadena = false, escapado = false;
+            for (let i = inicio; i < limpio.length; i++) {
+                const caracter = limpio[i];
+                if (enCadena) {
+                    if (escapado) escapado = false;
+                    else if (caracter === '\\') escapado = true;
+                    else if (caracter === '"') enCadena = false;
+                } else if (caracter === '"') enCadena = true;
+                else if (caracter === '[') profundidad++;
+                else if (caracter === ']' && --profundidad === 0) {
+                    const resultado = JSON.parse(limpio.slice(inicio, i + 1));
+                    if (!Array.isArray(resultado)) throw new Error('La respuesta no es una lista.');
+                    return resultado;
+                }
+            }
+            throw new Error('El arreglo JSON llegó incompleto.');
+        }
+
+        function mostrarMarkdownSeguro(texto) {
+            if (window.marked && window.DOMPurify) {
+                return window.DOMPurify.sanitize(window.marked.parse(String(texto || '')));
+            }
+            return escapeHtml(texto || '').replace(/\n/g, '<br>');
+        }
+
+        async function consultarGemini(prompt, accessCode, modelChoice, temperature = 0.1) {
+            if (!accessCode) throw new Error('Ingresá el código de acceso al servicio.');
+            const modelo = /^gemini-[a-z0-9.-]+$/i.test(modelChoice) ? modelChoice : 'gemini-2.5-flash';
+            const baseUrl = window.GEMINI_PROXY_URL;
+            if (!baseUrl || baseUrl.includes('YOUR_CLOUDFLARE_SUBDOMAIN')) throw new Error('El servicio seguro todavía no está configurado.');
+            const url = `${baseUrl.replace(/\/$/, '')}/v1/generate`;
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 50000);
+            let response;
+            try {
+                response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessCode}` },
+                    signal: controller.signal,
+                    body: JSON.stringify({ model: modelo, prompt, temperature })
+                });
+            } catch (error) {
+                if (error && error.name === 'AbortError') throw new Error('La consulta tardó demasiado. Probá de nuevo.');
+                throw new Error('No se pudo conectar con el servicio seguro. Revisá tu conexión e intentá otra vez.');
+            } finally {
+                clearTimeout(timer);
+            }
+            let data;
+            try { data = await response.json(); }
+            catch (_) { throw new Error('El servicio devolvió una respuesta inválida.'); }
+            if (!response.ok || data.error) {
+                throw new Error((data.error && data.error.message) || `El servicio respondió con error HTTP ${response.status}.`);
+            }
+            const candidato = data.candidates && data.candidates[0];
+            const partes = candidato && candidato.content && candidato.content.parts;
+            const texto = Array.isArray(partes) ? partes.map(parte => textoSeguro(parte && parte.text)).join('') : '';
+            if (!texto.trim()) {
+                const motivo = candidato && candidato.finishReason ? ` (${candidato.finishReason})` : '';
+                throw new Error(`Gemini no devolvió texto útil${motivo}. Probá otra consulta.`);
+            }
+            return { text: texto, groundingMetadata: candidato.groundingMetadata || null };
+        }
+
+        function mostrarFuentes(groundingMetadata) {
+            const panel = document.getElementById('sourcesPanel');
+            const lista = document.getElementById('sourcesList');
+            lista.replaceChildren();
+            const chunks = groundingMetadata && Array.isArray(groundingMetadata.groundingChunks)
+                ? groundingMetadata.groundingChunks : [];
+            const urlsVistas = new Set();
+            chunks.forEach(chunk => {
+                const web = chunk && chunk.web;
+                if (!web || typeof web.uri !== 'string') return;
+                try {
+                    const url = new URL(web.uri);
+                    if (!['http:', 'https:'].includes(url.protocol) || urlsVistas.has(url.href)) return;
+                    urlsVistas.add(url.href);
+                    const enlace = document.createElement('a');
+                    enlace.href = url.href;
+                    enlace.target = '_blank';
+                    enlace.rel = 'noopener noreferrer';
+                    enlace.className = 'px-2 py-1 rounded border border-indigo-500/30 text-cyan-300 hover:bg-indigo-900/40';
+                    enlace.textContent = textoSeguro(web.title) || url.hostname;
+                    lista.appendChild(enlace);
+                } catch (_) {}
+            });
+            panel.classList.toggle('hidden', urlsVistas.size === 0);
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            cargarHistorialLocal();
+            const theme = leerLocalStorage('app_theme', 'dark') || 'dark';
+            setTheme(theme);
+        });
+
+        function toggleTheme() {
+            const current = document.getElementById('htmlTag').classList.contains('light') ? 'light' : 'dark';
+            const next = current === 'dark' ? 'light' : 'dark';
+            setTheme(next);
+        }
+
+        function setTheme(theme) {
+            const html = document.getElementById('htmlTag');
+            const icon = document.getElementById('themeIcon');
+            if (theme === 'light') {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                icon.className = 'fa-solid fa-sun';
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                icon.className = 'fa-solid fa-moon';
+            }
+            guardarLocalStorage('app_theme', theme);
+        }
+
+        function actualizarConsultaFiltros() {
+            const prov = document.getElementById('selectProvincia').value;
+            const rubro = document.getElementById('selectRubro').value;
+            let queryAuto = "";
+            if (rubro) queryAuto += rubro;
+            if (prov) queryAuto += (queryAuto ? " en " : "") + prov;
+            if (queryAuto) {
+                document.getElementById('searchInput').value = queryAuto;
+            }
+        }
+
+        function toggleMobileConfig() {
+            document.getElementById('apiConfigPanel').classList.toggle('hidden');
+        }
+
+        function mostrarToast(mensaje) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = mensaje;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        async function buscarEmpresas(queryCustom = null) {
+            const accessCode = document.getElementById('proxyAccessCode').value.trim();
+            const queryInput = document.getElementById('searchInput');
+            const query = queryCustom || queryInput.value.trim();
+
+            if (queryCustom) queryInput.value = queryCustom;
+
+            if (!accessCode) {
+                alert("⚠️ Ingresá el código de acceso al servicio en el panel superior.");
+                document.getElementById('apiConfigPanel').classList.remove('hidden');
+                document.getElementById('proxyAccessCode').focus();
+                return;
+            }
+
+            if (!query) {
+                alert("⚠️ Escribí el rubro o las empresas que querés buscar.");
+                return;
+            }
+
+            guardarEnHistorial(query);
+
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('resultsContainer').classList.add('hidden');
+            document.getElementById('rawResponse').classList.add('hidden');
+            mostrarFuentes(null);
+            empresasSeleccionadas.clear();
+
+            const modelChoice = document.getElementById('modelSelect').value;
+            const promptText = `Actúa como analista comercial y fiscal experto en Argentina.
+            Investiga en tiempo real y provee una lista completa de empresas o locales comerciales reales para: "${query}".
+            Para cada empresa encontrada, devuelve estrictamente un objeto JSON dentro de un arreglo/array JSON con esta estructura exacta:
+            [
+              {
+                "nombre_comercial": "Nombre del local o marca",
+                "razon_social": "Razón social jurídica o probable",
+                "cuit": "CUIT formato XX-XXXXXXXX-X o 'A verificar'",
+                "direccion": "Dirección completa o localidad",
+                "telefono": "Teléfono de contacto",
+                "sitio_web": "Sitio web o 'No registra'"
+              }
+            ]
+            INSTRUCCIÓN CRÍTICA: Devuelve UNICAMENTE el array JSON válido, sin textos introductorios ni bloques extras.`;
+
+            try {
+                const respuestaGemini = await consultarGemini(promptText, accessCode, modelChoice, 0.1);
+                mostrarFuentes(respuestaGemini.groundingMetadata);
+                const textResponse = respuestaGemini.text;
+                let jsonParsed = [];
+                try {
+                    jsonParsed = parseJsonArray(textResponse).map(normalizarEmpresa).filter(Boolean);
+                } catch (e) {
+                    console.warn("No se pudo interpretar la respuesta JSON de Gemini.", e);
+                    document.getElementById('rawTextContent').innerText = textResponse;
+                    document.getElementById('rawResponse').classList.remove('hidden');
+                }
+
+                datosActuales = jsonParsed;
+                datosFiltrados = [...datosActuales];
+                
+                document.getElementById('badgeCount').innerText = datosFiltrados.length;
+                renderViews(datosFiltrados);
+
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('resultsContainer').classList.remove('hidden');
+
+            } catch (error) {
+                document.getElementById('loading').classList.add('hidden');
+                alert("❌ Error al conectar con la API de Gemini: " + error.message);
+            }
+        }
+
+        function filtrarResultadosLocales() {
+            const filtro = document.getElementById('internalFilter').value.toLowerCase();
+            datosFiltrados = datosActuales.filter(item =>
+                ['nombre_comercial', 'razon_social', 'cuit', 'direccion', 'telefono']
+                    .some(campo => textoSeguro(item[campo]).toLowerCase().includes(filtro))
+            );
+            document.getElementById('badgeCount').innerText = datosFiltrados.length;
+            renderViews(datosFiltrados);
+        }
+
+        function renderViews(data) {
+            const mobileContainer = document.getElementById('mobileCardsView');
+            const desktopContainer = document.getElementById('desktopTableBody');
+
+            mobileContainer.innerHTML = '';
+            desktopContainer.innerHTML = '';
+
+            if (data.length === 0) {
+                mobileContainer.innerHTML = `<div class="p-6 text-center text-slate-400 glass-panel rounded-xl">No se encontraron coincidencias.</div>`;
+                desktopContainer.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400">No se encontraron coincidencias.</td></tr>`;
+                return;
+            }
+
+            data.forEach((item, index) => {
+                const keyEmpresa = `crm_note_${textoSeguro(item.nombre_comercial).replace(/[^a-zA-Z0-9]/g, '_')}`;
+                const notaGuardada = leerLocalStorage(keyEmpresa, '') || '';
+                const cuitClean = textoSeguro(item.cuit).replace(/[^0-9]/g, '');
+                const cuitLink = cuitClean.length === 11 ? `https://www.cuitonline.com/search.php?q=${cuitClean}` : `https://www.google.com/search?q=CUIT+${encodeURIComponent(item.razon_social || item.nombre_comercial)}`;
+                const nombreComercialHtml = escapeHtml(item.nombre_comercial || 'Sin Nombre');
+                const nombreTablaHtml = escapeHtml(item.nombre_comercial || '-');
+                const razonSocialHtml = escapeHtml(item.razon_social || '-');
+                const cuitHtml = escapeHtml(item.cuit || 'CUIT N/D');
+                const direccionHtml = escapeHtml(item.direccion || '-');
+                const telefonoHtml = escapeHtml(item.telefono || '-');
+                const telefonoHref = escapeHtml(`tel:${textoSeguro(item.telefono).replace(/[^0-9+]/g, '')}`);
+                const cuitLinkHtml = escapeHtml(cuitLink);
+                const notaHtml = escapeHtml(notaGuardada);
+                const notaCortaHtml = escapeHtml(notaGuardada.substring(0, 25));
+                const checkedAttr = empresasSeleccionadas.has(item) ? 'checked' : '';
+
+                // 1. Mobile Card
+                const card = document.createElement('div');
+                card.className = "glass-card p-4 rounded-xl space-y-3 shadow-lg relative";
+                
+                const cardHeader = document.createElement('div');
+                cardHeader.className = "flex justify-between items-start border-b border-indigo-500/20 pb-2.5";
+                cardHeader.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" data-index="${index}" ${checkedAttr} class="chk-empresa rounded text-purple-600 focus:ring-purple-500 w-4 h-4 cursor-pointer">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">#${index + 1}</span>
+                            <h4 class="text-base font-extrabold text-white mt-0.5">${nombreComercialHtml}</h4>
+                        </div>
+                    </div>
+                    <a href="${cuitLinkHtml}" target="_blank" rel="noopener noreferrer" class="text-xs font-mono font-bold text-cyan-300 bg-cyan-950/80 px-2.5 py-1 rounded-md border border-cyan-500/30 flex items-center gap-1">
+                        ${cuitHtml} <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                    </a>
+                `;
+
+                const cardBody = document.createElement('div');
+                cardBody.className = "grid grid-cols-1 gap-1.5 text-xs";
+                cardBody.innerHTML = `
+                    <div class="flex items-center gap-2 text-slate-300">
+                        <i class="fa-solid fa-id-card text-indigo-400 w-4"></i>
+                        <span class="text-slate-400">Razón Social:</span>
+                        <strong class="text-white">${razonSocialHtml}</strong>
+                    </div>
+                    <div class="flex items-center gap-2 text-slate-300">
+                        <i class="fa-solid fa-location-dot text-rose-400 w-4"></i>
+                        <span class="text-slate-400">Dirección:</span>
+                        <span class="text-slate-200">${direccionHtml}</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-slate-300">
+                        <i class="fa-solid fa-phone text-emerald-400 w-4"></i>
+                        <span class="text-slate-400">Teléfono:</span>
+                        <a href="${telefonoHref}" class="text-emerald-400 font-bold hover:underline">${telefonoHtml}</a>
+                    </div>
+                    ${notaGuardada ? `<div class="p-2 bg-amber-500/10 border border-amber-500/30 rounded-lg text-[11px] text-amber-200"><i class="fa-solid fa-note-sticky mr-1"></i> Nota CRM: ${notaHtml}</div>` : ''}
+                `;
+
+                const cardFooter = document.createElement('div');
+                cardFooter.className = "pt-2 border-t border-indigo-500/10 flex flex-wrap justify-between items-center gap-2";
+                
+                const btnInforme = document.createElement('button');
+                btnInforme.className = "px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold flex items-center gap-1 cursor-pointer";
+                btnInforme.innerHTML = `<i class="fa-solid fa-file-invoice"></i> Informe`;
+                btnInforme.onclick = () => generarInformeEmpresa(item);
+
+                const btnCRM = document.createElement('button');
+                btnCRM.className = "px-3 py-1.5 rounded-lg bg-purple-900/50 text-purple-200 border border-purple-500/30 text-xs font-bold flex items-center gap-1 cursor-pointer";
+                btnCRM.innerHTML = `<i class="fa-solid fa-pen-to-square"></i> CRM Nota`;
+                btnCRM.onclick = () => abrirModalCRM(keyEmpresa, item.nombre_comercial);
+
+                const btnCopiar = document.createElement('button');
+                btnCopiar.className = "px-3 py-1.5 rounded-lg bg-indigo-900/60 text-indigo-200 text-xs font-semibold flex items-center gap-1 cursor-pointer";
+                btnCopiar.innerHTML = `<i class="fa-solid fa-copy"></i> Copiar`;
+                btnCopiar.onclick = () => copiarFichaEmpresa(item);
+
+                cardFooter.appendChild(btnInforme);
+                cardFooter.appendChild(btnCRM);
+                cardFooter.appendChild(btnCopiar);
+
+                card.appendChild(cardHeader);
+                card.appendChild(cardBody);
+                card.appendChild(cardFooter);
+                mobileContainer.appendChild(card);
+
+                // 2. Desktop Table Row
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-indigo-900/30 transition duration-150";
+                
+                tr.innerHTML = `
+                    <td class="px-3 py-4 text-center">
+                        <input type="checkbox" data-index="${index}" ${checkedAttr} class="chk-empresa rounded text-purple-600 focus:ring-purple-500 w-4 h-4 cursor-pointer">
+                    </td>
+                    <td class="px-5 py-4 font-bold text-white">
+                        ${nombreTablaHtml}
+                        ${notaGuardada ? `<br><span class="text-[10px] text-amber-400 font-normal"><i class="fa-solid fa-sticky-note"></i> ${notaCortaHtml}...</span>` : ''}
+                    </td>
+                    <td class="px-5 py-4 text-slate-300">${razonSocialHtml}</td>
+                    <td class="px-5 py-4 font-mono text-xs font-bold">
+                        <a href="${cuitLinkHtml}" target="_blank" rel="noopener noreferrer" class="text-cyan-300 bg-cyan-950/80 px-2 py-1 rounded border border-cyan-500/30 hover:bg-cyan-900 transition inline-flex items-center gap-1">
+                            ${escapeHtml(item.cuit || '-')} <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                        </a>
+                    </td>
+                    <td class="px-5 py-4 text-slate-300">${direccionHtml}</td>
+                    <td class="px-5 py-4 text-emerald-400 font-medium">${telefonoHtml}</td>
+                    <td class="px-5 py-4 text-center">
+                        <div class="flex items-center justify-center gap-1.5" id="actionsCell_${index}"></div>
+                    </td>
+                `;
+                desktopContainer.appendChild(tr);
+
+                // Asignar eventos de forma limpia a la tabla de escritorio
+                const actionsCell = tr.querySelector(`#actionsCell_${index}`);
+                
+                const dtInforme = document.createElement('button');
+                dtInforme.className = "px-2.5 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold flex items-center gap-1 cursor-pointer";
+                dtInforme.innerHTML = `<i class="fa-solid fa-file-lines"></i>`;
+                dtInforme.title = "Generar Informe IA";
+                dtInforme.onclick = () => generarInformeEmpresa(item);
+
+                const dtCRM = document.createElement('button');
+                dtCRM.className = "px-2.5 py-1.5 rounded-lg bg-purple-900/50 text-purple-200 border border-purple-500/30 text-xs font-bold flex items-center gap-1 cursor-pointer";
+                dtCRM.innerHTML = `<i class="fa-solid fa-pen-to-square"></i>`;
+                dtCRM.title = "Nota CRM";
+                dtCRM.onclick = () => abrirModalCRM(keyEmpresa, item.nombre_comercial);
+
+                const dtCopiar = document.createElement('button');
+                dtCopiar.className = "p-2 rounded-lg bg-indigo-900/60 text-indigo-200 text-xs cursor-pointer";
+                dtCopiar.innerHTML = `<i class="fa-solid fa-copy"></i>`;
+                dtCopiar.title = "Copiar Ficha";
+                dtCopiar.onclick = () => copiarFichaEmpresa(item);
+
+                actionsCell.appendChild(dtInforme);
+                actionsCell.appendChild(dtCRM);
+                actionsCell.appendChild(dtCopiar);
+            });
+
+            // Escuchar cambios en los checkboxes de selección
+            document.querySelectorAll('.chk-empresa').forEach(chk => {
+                chk.addEventListener('change', (e) => {
+                    const idx = Number.parseInt(e.target.getAttribute('data-index'), 10);
+                    const itemSeleccionado = datosFiltrados[idx];
+                    if (!itemSeleccionado) return;
+                    if (e.target.checked) empresasSeleccionadas.add(itemSeleccionado);
+                    else empresasSeleccionadas.delete(itemSeleccionado);
+                    document.querySelectorAll(`.chk-empresa[data-index="${idx}"]`).forEach(casilla => {
+                        casilla.checked = e.target.checked;
+                    });
+                });
+            });
+        }
+
+        function copiarFichaEmpresa(item) {
+            const ficha = `Empresa: ${item.nombre_comercial || ''}
+Razón Social: ${item.razon_social || ''}
+CUIT: ${item.cuit || ''}
+Dirección: ${item.direccion || ''}
+Teléfono: ${item.telefono || ''}
+Web: ${item.sitio_web || ''}`;
+            copiarAlPortapapeles(ficha, "¡Ficha copiada al portapapeles!");
+        }
+
+        // --- SISTEMA DE NOTAS CRM ---
+        function abrirModalCRM(key, nombre) {
+            crmEmpresaKey = key;
+            document.getElementById('crmModalTitle').innerText = `Nota CRM: ${nombre}`;
+            document.getElementById('crmNotesArea').value = leerLocalStorage(key, '') || "";
+            document.getElementById('crmModal').classList.remove('hidden');
+        }
+
+        function cerrarModalCRM() {
+            document.getElementById('crmModal').classList.add('hidden');
+        }
+
+        function guardarNotaCRM() {
+            const texto = document.getElementById('crmNotesArea').value.trim();
+            if (texto) {
+                if (!guardarLocalStorage(crmEmpresaKey, texto)) {
+                    mostrarToast("No se pudo guardar la nota en este navegador.");
+                    return;
+                }
+            } else {
+                borrarLocalStorage(crmEmpresaKey);
+            }
+            cerrarModalCRM();
+            mostrarToast("¡Nota CRM guardada!");
+            renderViews(datosFiltrados);
+        }
+
+        // --- SISTEMA MULTI-SELECCIÓN Y COMPARATIVA IA ---
+        async function compararEmpresasSeleccionadas() {
+            if (empresasSeleccionadas.size < 2) {
+                alert("⚠️ Seleccioná al menos 2 empresas marcando sus casillas (checkboxes) para compararlas.");
+                return;
+            }
+
+            const listaComparar = Array.from(empresasSeleccionadas);
+            document.getElementById('compareModal').classList.remove('hidden');
+            document.getElementById('compareLoadingState').classList.remove('hidden');
+            document.getElementById('compareTextResult').classList.add('hidden');
+
+            const accessCode = document.getElementById('proxyAccessCode').value.trim();
+            const modelChoice = document.getElementById('modelSelect').value;
+
+            const promptCompare = `Actúa como un consultor de negocios y estrategia comercial senior en Argentina.
+            Realiza un ANÁLISIS COMPARATIVO DE MERCADO entre las siguientes empresas seleccionadas:
+            ${JSON.stringify(listaComparar, null, 2)}
+
+            Estructura el informe comparativo en formato Markdown claro con:
+            1. RESUMEN DE MARCAS Y PRESENCIA EN EL MERCADO
+            2. CUADRO COMPARATIVO DE UBICACIÓN Y ALCANCE REGIONAL
+            3. FORTALEZAS Y DEBILIDADES RELATIVAS
+            4. RECOMENDACIONES DE PROSPECCIÓN Y OPORTUNIDADES DE NEGOCIO`;
+
+            try {
+                const { text: textoResultado } = await consultarGemini(promptCompare, accessCode, modelChoice, 0.2);
+
+                document.getElementById('compareLoadingState').classList.add('hidden');
+                document.getElementById('compareTextResult').innerHTML = mostrarMarkdownSeguro(textoResultado);
+                document.getElementById('compareTextResult').classList.remove('hidden');
+
+            } catch (error) {
+                document.getElementById('compareLoadingState').classList.add('hidden');
+                document.getElementById('compareTextResult').innerText = "❌ Error en comparativa: " + error.message;
+                document.getElementById('compareTextResult').classList.remove('hidden');
+            }
+        }
+
+        function cerrarModalCompare() {
+            document.getElementById('compareModal').classList.add('hidden');
+        }
+
+        // --- INFORMES INDIVIDUALES Y EXPORTACIÓN ---
+        async function generarInformeEmpresa(empresa) {
+            empresaActualNombre = empresa.nombre_comercial || "Empresa";
+            document.getElementById('modalEmpresaTitle').innerText = `Informe Ejecutivo: ${empresaActualNombre}`;
+            
+            document.getElementById('reportModal').classList.remove('hidden');
+            document.getElementById('reportLoadingState').classList.remove('hidden');
+            document.getElementById('reportTextResult').classList.add('hidden');
+
+            const accessCode = document.getElementById('proxyAccessCode').value.trim();
+            const modelChoice = document.getElementById('modelSelect').value;
+
+            const promptReporte = `Actúa como consultor de negocios senior en Argentina.
+            Redacta un Informe Ejecutivo Comercial y de Auditoría en tiempo real para:
+            - Nombre Comercial: ${empresa.nombre_comercial}
+            - Razón Social: ${empresa.razon_social}
+            - CUIT: ${empresa.cuit}
+            - Dirección: ${empresa.direccion}
+            - Teléfono: ${empresa.telefono}
+            - Sitio Web: ${empresa.sitio_web}
+
+            Estructura en formato Markdown rico con encabezados: 
+            1. Resumen Ejecutivo
+            2. Posicionamiento de Mercado
+            3. Auditoría de Datos Fiscales y CUIT
+            4. Oportunidades Comerciales`;
+
+            try {
+                const respuestaInforme = await consultarGemini(promptReporte, accessCode, modelChoice, 0.2);
+                informeActualTexto = respuestaInforme.text;
+
+                document.getElementById('reportLoadingState').classList.add('hidden');
+                document.getElementById('reportTextResult').innerHTML = mostrarMarkdownSeguro(informeActualTexto);
+                document.getElementById('reportTextResult').classList.remove('hidden');
+
+            } catch (error) {
+                document.getElementById('reportLoadingState').classList.add('hidden');
+                document.getElementById('reportTextResult').innerText = "❌ Error: " + error.message;
+                document.getElementById('reportTextResult').classList.remove('hidden');
+            }
+        }
+
+        function cerrarModalInforme() {
+            document.getElementById('reportModal').classList.add('hidden');
+        }
+
+        function copiarInformeActual() {
+            if (!informeActualTexto) return;
+            copiarAlPortapapeles(informeActualTexto, "¡Informe copiado al portapapeles!");
+        }
+
+        function descargarInformeArchivo() {
+            if (!informeActualTexto) return;
+            const blob = new Blob([informeActualTexto], { type: "text/plain;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = `informe_${empresaActualNombre.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase()}.txt`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+            mostrarToast("¡Informe descargado (.txt)!");
+        }
+
+        async function copiarAlPortapapeles(texto, mensajeExito) {
+            try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(texto);
+                } else {
+                    throw new Error('Clipboard API no disponible');
+                }
+                mostrarToast(mensajeExito);
+            } catch (_) {
+                try {
+                    const area = document.createElement('textarea');
+                    area.value = texto;
+                    area.setAttribute('readonly', '');
+                    area.style.position = 'fixed';
+                    area.style.opacity = '0';
+                    document.body.appendChild(area);
+                    area.select();
+                    const copiado = document.execCommand('copy');
+                    area.remove();
+                    if (!copiado) throw new Error('No se pudo copiar');
+                    mostrarToast(mensajeExito);
+                } catch (_) {
+                    alert('No se pudo copiar automáticamente. Seleccioná y copiá el texto manualmente.');
+                }
+            }
+        }
+
+        function copiarTodosLosDatos() {
+            if (!datosFiltrados.length) return;
+            let textoCompleto = "";
+            datosFiltrados.forEach((item, i) => {
+                textoCompleto += `--- EMPRESA #${i+1} ---
+Nombre: ${item.nombre_comercial}
+Razón Social: ${item.razon_social}
+CUIT: ${item.cuit}
+Dirección: ${item.direccion}
+Teléfono: ${item.telefono}
+Web: ${item.sitio_web}
+
+`;
+            });
+            copiarAlPortapapeles(textoCompleto, "¡Fichas copiadas!");
+        }
+
+        function escaparCeldaCSV(valor) {
+            let texto = textoSeguro(valor).replace(/\r\n?/g, '\n');
+            if (/^[\u0000-\u0020]*[=+\-@]/.test(texto)) texto = "'" + texto;
+            return `"${texto.replace(/"/g, '""')}"`;
+        }
+
+        function exportarCSV() {
+            if (!datosFiltrados.length) return;
+            const columnas = ['Nombre Comercial', 'Razón Social', 'CUIT', 'Dirección', 'Teléfono', 'Sitio Web'];
+            const filas = [columnas, ...datosFiltrados.map(row => [
+                row.nombre_comercial, row.razon_social, row.cuit, row.direccion, row.telefono, row.sitio_web
+            ])];
+            const csvContent = '\uFEFF' + filas.map(fila => fila.map(escaparCeldaCSV).join(',')).join('\r\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'empresas_argentina_ultra.csv';
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+            mostrarToast('CSV descargado correctamente.');
+        }
+
+        function guardarEnHistorial(query) {
+            let historial = leerJsonLocalStorage('busquedas_historial', []);
+            if (!Array.isArray(historial)) historial = [];
+            historial = historial.filter(q => typeof q === 'string');
+            if (!historial.includes(query)) {
+                historial.unshift(query);
+                if (historial.length > 5) historial.pop();
+                guardarLocalStorage('busquedas_historial', JSON.stringify(historial));
+            }
+            cargarHistorialLocal();
+        }
+
+        function cargarHistorialLocal() {
+            const guardado = leerJsonLocalStorage('busquedas_historial', []);
+            const historial = Array.isArray(guardado) ? guardado.filter(q => typeof q === 'string') : [];
+            const container = document.getElementById('searchHistoryContainer');
+            const chips = document.getElementById('historyChips');
+            chips.replaceChildren();
+            if (historial.length > 0) {
+                container.classList.remove('hidden');
+                historial.forEach(q => {
+                    const btn = document.createElement('button');
+                    btn.className = "px-2.5 py-1 rounded-lg bg-indigo-950/80 hover:bg-indigo-900 text-indigo-200 text-xs font-medium border border-indigo-500/30 transition cursor-pointer";
+                    btn.innerHTML = `<i class="fa-solid fa-magnifying-glass text-[10px] mr-1 text-amber-400"></i> ${escapeHtml(q)}`;
+                    btn.onclick = () => buscarEmpresas(q);
+                    chips.appendChild(btn);
+                });
+            } else {
+                container.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
