@@ -957,7 +957,7 @@
             const results = [];
             for (const item of urls) {
                 results.push({ nombre: item.nombre, ...(await solicitarEndpointBcra(item.url)) });
-                if (item !== urls[urls.length - 1]) await new Promise(resolve => setTimeout(resolve, 250));
+                if (item !== urls[urls.length - 1]) await new Promise(resolve => setTimeout(resolve, 900));
             }
             const denominaciones = results.map(item => item.data && item.data.results && item.data.results.denominacion).filter(Boolean);
             const lineas = [
@@ -1003,7 +1003,7 @@
             enlace.rel = 'noopener noreferrer';
             enlace.className = 'px-2 py-1 rounded border border-amber-500/30 text-amber-200 hover:bg-amber-900/40';
             enlace.textContent = `ARCA manual — ${textoSeguro(nombre) || cuit}`;
-            enlace.title = 'Abre la consulta oficial; si pide CAPTCHA, se completa manualmente. El CUIT se copia al portapapeles.';
+            enlace.title = 'Abre la consulta oficial y copia este CUIT. Si el portal lo solicita, hay que pegarlo y completar el CAPTCHA manualmente.';
             enlace.addEventListener('click', () => {
                 cuitConsultaActual = cuit;
                 void copiarCuitLookup();
@@ -1162,7 +1162,7 @@
                 const respuestaBcra = await solicitarEndpointBcra(urlBcraActual);
                 informeBcraLote += `\n\n## BCRA directo — ${nombre}\n\n${textoEndpointBcra('Último período publicado', respuestaBcra)}\n\n[API oficial del BCRA](${urlBcraActual})`;
                 agregarEnlaceBcraDirecto(cuit, nombre);
-                if (i < empresas.length - 1) await new Promise(resolve => setTimeout(resolve, 350));
+                if (i < empresas.length - 1) await new Promise(resolve => setTimeout(resolve, 900));
             }
             if (informeBcraLote) {
                 resultadoAuditoriaOrganismos += informeBcraLote;
@@ -1362,10 +1362,11 @@
                             <h4 class="text-base font-extrabold text-white mt-0.5">${nombreComercialHtml}</h4>
                         </div>
                     </div>
-                    <a href="#" onclick="event.preventDefault(); prepararConsultaOficial('arca','${cuitClean}')" title="Verificar CUIT en el portal oficial de ARCA" class="text-xs font-mono font-bold text-cyan-300 bg-cyan-950/80 px-2.5 py-1 rounded-md border border-cyan-500/30 flex items-center gap-1">
-                        CUIT: ${cuitHtml} <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
-                    </a>
+                    <button type="button" title="Abrir el informe de esta empresa en la app" class="cuit-report-trigger text-xs font-mono font-bold text-cyan-300 bg-cyan-950/80 px-2.5 py-1 rounded-md border border-cyan-500/30 flex items-center gap-1">
+                        CUIT: ${cuitHtml} <i class="fa-solid fa-clipboard-check text-[9px]"></i>
+                    </button>
                 `;
+                cardHeader.querySelector('.cuit-report-trigger').addEventListener('click', () => buscarOrganismosEmpresa(item));
 
                 const cardBody = document.createElement('div');
                 cardBody.className = "grid grid-cols-1 gap-1.5 text-xs";
@@ -1420,7 +1421,7 @@
 
                 const btnBcra = document.createElement('button');
                 btnBcra.className = "px-3 py-1.5 rounded-lg bg-emerald-900/60 text-emerald-200 border border-emerald-500/30 text-xs font-bold flex items-center gap-1 cursor-pointer";
-                btnBcra.innerHTML = `<i class="fa-solid fa-landmark"></i> BCRA`;
+                btnBcra.innerHTML = `<i class="fa-solid fa-landmark"></i> Informe BCRA`;
                 btnBcra.title = "Abrir informe directo del BCRA para este CUIT: deuda, histórico y cheques rechazados";
                 btnBcra.onclick = () => consultarBcraEmpresa(item);
 
@@ -1450,9 +1451,9 @@
                     </td>
                     <td class="px-5 py-4 text-slate-300">${razonSocialHtml}</td>
                     <td class="px-5 py-4 font-mono text-xs font-bold">
-                        <a href="#" onclick="event.preventDefault(); prepararConsultaOficial('arca','${cuitClean}')" title="Verificar CUIT en el portal oficial de ARCA" class="text-cyan-300 bg-cyan-950/80 px-2 py-1 rounded border border-cyan-500/30 hover:bg-cyan-900 transition inline-flex items-center gap-1">
-                            CUIT: ${cuitHtml} <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
-                        </a>
+                        <button type="button" title="Abrir el informe de esta empresa en la app" class="cuit-report-trigger text-cyan-300 bg-cyan-950/80 px-2 py-1 rounded border border-cyan-500/30 hover:bg-cyan-900 transition inline-flex items-center gap-1">
+                            CUIT: ${cuitHtml} <i class="fa-solid fa-clipboard-check text-[9px]"></i>
+                        </button>
                     </td>
                     <td class="px-5 py-4 text-slate-300">${direccionHtml}</td>
                     <td class="px-5 py-4 text-emerald-400 font-medium">${telefonoHtml}</td>
@@ -1460,6 +1461,7 @@
                         <div class="flex items-center justify-center gap-1.5" id="actionsCell_${index}"></div>
                     </td>
                 `;
+                tr.querySelector('.cuit-report-trigger').addEventListener('click', () => buscarOrganismosEmpresa(item));
                 desktopContainer.appendChild(tr);
 
                 // Asignar eventos de forma limpia a la tabla de escritorio
@@ -1491,7 +1493,7 @@
 
                 const dtBcra = document.createElement('button');
                 dtBcra.className = "px-2 py-1.5 rounded-lg bg-emerald-900/60 text-emerald-200 border border-emerald-500/30 text-[10px] font-bold cursor-pointer";
-                dtBcra.innerText = "BCRA";
+                dtBcra.innerText = "Informe BCRA";
                 dtBcra.title = "Abrir informe directo del BCRA para este CUIT: deuda, histórico y cheques rechazados";
                 dtBcra.onclick = () => consultarBcraEmpresa(item);
 
