@@ -720,7 +720,7 @@
             const modelo = /^gemini-2\.5-(flash|pro)$/i.test(modelChoice) ? modelChoice : 'gemini-2.5-flash';
             const url = `${window.GEMINI_PROXY_URL.replace(/\/$/, '')}/v1/generate`;
             const controller = new AbortController();
-            const timer = setTimeout(() => controller.abort(), 75000);
+            const timer = setTimeout(() => controller.abort(), 90000);
             let response;
             try {
                 response = await fetch(url, {
@@ -733,7 +733,7 @@
                     body: JSON.stringify({ model: modelo, prompt, temperature })
                 });
             } catch (error) {
-                if (error && error.name === 'AbortError') throw new Error('El servidor no respondió en 75 segundos. Gemini puede estar demorado; probá nuevamente.');
+                if (error && error.name === 'AbortError') throw new Error('El servidor no respondió en 90 segundos. Gemini puede estar demorado; probá nuevamente.');
                 throw new Error('No se pudo conectar con Gemini. Revisá tu conexión e intentá otra vez.');
             } finally {
                 clearTimeout(timer);

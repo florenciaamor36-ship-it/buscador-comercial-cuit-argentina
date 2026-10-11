@@ -131,7 +131,7 @@ export default {
           "x-goog-api-key": env.GEMINI_API_KEY
         },
         body: JSON.stringify(upstreamBody),
-        signal: AbortSignal.timeout(45_000)
+        signal: AbortSignal.timeout(60_000)
       });
     } catch (_) {
       return jsonResponse({ error: { message: "No se pudo conectar con Gemini." } }, 502, origin);
