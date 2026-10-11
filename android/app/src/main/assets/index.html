@@ -723,7 +723,7 @@
             if (!baseUrl || baseUrl.includes('YOUR_CLOUDFLARE_SUBDOMAIN')) throw new Error('El servicio seguro todavía no está configurado.');
             const url = `${baseUrl.replace(/\/$/, '')}/v1/generate`;
             const controller = new AbortController();
-            const timer = setTimeout(() => controller.abort(), 50000);
+            const timer = setTimeout(() => controller.abort(), 75000);
             let response;
             try {
                 response = await fetch(url, {
@@ -733,7 +733,7 @@
                     body: JSON.stringify({ model: modelo, prompt, temperature })
                 });
             } catch (error) {
-                if (error && error.name === 'AbortError') throw new Error('La consulta tardó demasiado. Probá de nuevo.');
+                if (error && error.name === 'AbortError') throw new Error('El servidor no respondió en 75 segundos. Gemini puede estar demorado; probá nuevamente.');
                 throw new Error('No se pudo conectar con el servicio seguro. Revisá tu conexión e intentá otra vez.');
             } finally {
                 clearTimeout(timer);
