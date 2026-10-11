@@ -136,6 +136,7 @@
                 <div class="w-full sm:w-52">
                     <input type="password" id="apiKey" autocomplete="off" spellcheck="false" placeholder="Pegá tu API Key de AI Studio..." class="w-full px-3 py-1.5 text-xs rounded-lg input-box focus:outline-none focus:ring-2 focus:ring-indigo-500">
                     <p class="mt-1 text-[10px] text-slate-400">Se usa solo durante esta sesión; no se guarda.</p>
+                    <button type="button" onclick="eliminarClaveAntigua()" class="mt-1 text-[10px] text-amber-300 underline">Borrar clave guardada por la versión anterior</button>
                 </div>
                 
                 <div class="flex items-center gap-2">
@@ -579,9 +580,17 @@
             panel.classList.toggle('hidden', urlsVistas.size === 0);
         }
 
-        window.addEventListener('DOMContentLoaded', function() {
-            // Retira la clave guardada por versiones anteriores; esta versión no la persiste.
+        function eliminarClaveAntigua() {
+            if (!leerLocalStorage('gemini_api_key', null)) {
+                mostrarToast('No hay una clave anterior guardada en este navegador.');
+                return;
+            }
+            if (!confirm('¿Querés borrar la clave que guardó la versión anterior en este navegador?')) return;
             borrarLocalStorage('gemini_api_key');
+            mostrarToast('Clave anterior borrada.');
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
             cargarHistorialLocal();
             const theme = leerLocalStorage('app_theme', 'dark') || 'dark';
             setTheme(theme);
