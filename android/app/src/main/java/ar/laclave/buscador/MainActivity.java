@@ -31,6 +31,7 @@ public final class MainActivity extends Activity {
                 .build();
 
         webView = new WebView(this);
+        webView.setBackgroundColor(Color.rgb(8, 13, 32));
         webView.setLayoutParams(new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));

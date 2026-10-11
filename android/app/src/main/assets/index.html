@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Buscador Comercial & Auditoría Fiscal Argentina PRO ULTRA</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2212%22 fill=%22%230f172a%22/%3E%3Cpath d=%22M12 52V25l20-13 20 13v27H38V36H26v16z%22 fill=%22%23fbbf24%22/%3E%3C/svg%3E">
+    <link rel="icon" type="image/png" sizes="192x192" href="./buscador-favicon.png">
+    <link rel="apple-touch-icon" href="./buscador-favicon.png">
+    <meta name="theme-color" content="#080d20">
     <!-- Tailwind CSS v4: versión fijada e integridad verificada -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3" integrity="sha384-aJ9rL4k6lF+91guGvUFVSkpIcge7Zd9EiI4TQDLoK9kFaFJgKHgjEXVvG/qA5COj" crossorigin="anonymous"></script>
     <!-- FontAwesome Icons -->
@@ -75,6 +77,21 @@
         .light .text-slate-300, .light .text-slate-200 { color: #334155 !important; }
         .light .text-indigo-300 { color: #4338ca !important; }
 
+        .app-splash {
+            position: fixed; inset: 0; z-index: 99999; display: grid; place-items: center;
+            background: radial-gradient(ellipse at center, #111c48 0%, #090f27 48%, #030712 100%);
+            opacity: 1; visibility: visible; transition: opacity .45s ease, visibility .45s ease;
+        }
+        .app-splash.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .app-splash-content { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 24px; text-align: center; }
+        .app-splash-logo { width: min(48vw, 220px); height: min(48vw, 220px); object-fit: cover; border-radius: 30px; border: 1px solid rgba(148,163,184,.25); box-shadow: 0 20px 75px rgba(30,64,175,.38); animation: splashFloat 1.8s ease-in-out infinite; }
+        .app-splash-title { color: #f8fafc; font-weight: 800; font-size: clamp(20px, 5vw, 28px); letter-spacing: .02em; }
+        .app-splash-caption { color: #cbd5e1; font-size: 12px; }
+        .app-splash-track { width: 150px; height: 4px; overflow: hidden; border-radius: 999px; background: rgba(148,163,184,.22); }
+        .app-splash-track::after { content: ''; display: block; width: 40%; height: 100%; border-radius: inherit; background: linear-gradient(90deg,#38bdf8,#fbbf24); animation: splashProgress 1.1s ease-in-out infinite; }
+        @keyframes splashFloat { 50% { transform: translateY(-6px); } }
+        @keyframes splashProgress { from { transform: translateX(-110%); } to { transform: translateX(280%); } }
+
         .glow-button {
             box-shadow: 0 0 25px rgba(79, 70, 229, 0.45);
         }
@@ -95,6 +112,14 @@
     </style>
 </head>
 <body class="min-h-full flex flex-col justify-between antialiased selection:bg-indigo-500 selection:text-white">
+    <div id="appSplash" class="app-splash" role="status" aria-live="polite">
+        <div class="app-splash-content">
+            <img src="./buscador-logo.png" alt="Logo Buscador Comercial" class="app-splash-logo">
+            <div class="app-splash-title">Buscador Comercial</div>
+            <div id="splashStatus" class="app-splash-caption">Preparando la búsqueda nacional…</div>
+            <div class="app-splash-track" aria-hidden="true"></div>
+        </div>
+    </div>
 
     <!-- Top Navigation Header -->
     <header class="sticky top-0 z-50 glass-panel border-b border-indigo-500/20 shadow-xl transition-colors">
@@ -102,11 +127,7 @@
             
             <div class="flex items-center justify-between w-full sm:w-auto">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-400 via-indigo-600 to-cyan-400 p-0.5 shadow-lg shadow-indigo-500/30">
-                        <div class="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
-                            <i class="fa-solid fa-building-circle-check text-amber-400 text-lg"></i>
-                        </div>
-                    </div>
+                    <img src="./buscador-logo.png" alt="Buscador Comercial" class="w-11 h-11 rounded-xl object-cover border border-indigo-400/30 shadow-lg shadow-indigo-500/30">
                     <div>
                         <h1 class="text-lg font-extrabold tracking-tight bg-gradient-to-r from-amber-400 via-indigo-200 to-cyan-300 bg-clip-text text-transparent">
                             CUIT & Business Intelligence <span class="text-xs px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-semibold ml-1">ULTRA</span>
@@ -171,33 +192,58 @@
                 </p>
             </div>
 
-            <!-- Filtros Rápidos -->
+            <!-- Filtros: padrón nacional y rubro libre -->
             <div class="mt-6 pt-4 border-t border-indigo-500/20 grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                    <label class="block text-xs font-bold text-indigo-200 mb-1"><i class="fa-solid fa-map-location-dot text-amber-400"></i> Provincia / Zona:</label>
-                    <select id="selectProvincia" onchange="actualizarConsultaFiltros()" class="w-full px-3 py-2 rounded-xl input-box text-xs focus:outline-none focus:border-amber-400">
-                        <option value="">Todas las Zonas / Escribir libremente</option>
-                        <option value="Buenos Aires">Buenos Aires (Provincia)</option>
-                        <option value="CABA (Capital Federal)">CABA (Capital Federal)</option>
-                        <option value="Mar del Plata">Mar del Plata / Costa Atlántica</option>
-                        <option value="Córdoba">Córdoba</option>
-                        <option value="Santa Fe (Rosario)">Santa Fe / Rosario</option>
-                        <option value="Mendoza">Mendoza</option>
-                        <option value="Tucumán">Tucumán</option>
-                        <option value="Patagonia (Bariloche, Neuquén)">Patagonia</option>
-                    </select>
+                    <label for="selectProvincia" class="block text-xs font-bold text-indigo-200 mb-1"><i class="fa-solid fa-map-location-dot text-amber-400"></i> Ciudad, pueblo o provincia:</label>
+                    <input type="text" id="selectProvincia" list="argentinaLocalidades" autocomplete="off" oninput="actualizarConsultaFiltros()" placeholder="Todas las localidades o escribí una zona" class="w-full px-3 py-2 rounded-xl input-box text-xs focus:outline-none focus:border-amber-400">
+                    <datalist id="argentinaLocalidades"></datalist>
+                    <p id="localidadesStatus" class="mt-1 text-[10px] text-slate-400">Cargando el padrón nacional Georef/INDEC; también acepta texto libre.</p>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-indigo-200 mb-1"><i class="fa-solid fa-industry text-amber-400"></i> Rubro Comercial:</label>
-                    <select id="selectRubro" onchange="actualizarConsultaFiltros()" class="w-full px-3 py-2 rounded-xl input-box text-xs focus:outline-none focus:border-amber-400">
-                        <option value="">Todos los Rubros / Escribir libremente</option>
-                        <option value="Comidas rápidas y Gastronomía">Gastronomía y Comidas Rápidas</option>
-                        <option value="Concesionarias y Automotor">Automotor y Concesionarias</option>
-                        <option value="Servicios de Tecnología e Internet">Tecnología e Internet</option>
-                        <option value="Construcción y Ferreterías">Construcción y Ferreterías</option>
-                        <option value="Supermercados y Distribuidores">Distribuidores y Supermercados</option>
-                        <option value="Indumentaria y Calzado">Indumentaria y Moda</option>
+                    <label for="selectRubro" class="block text-xs font-bold text-indigo-200 mb-1"><i class="fa-solid fa-industry text-amber-400"></i> Rubro comercial:</label>
+                    <select id="selectRubro" onchange="document.getElementById('rubroManual').value=''; actualizarConsultaFiltros()" class="w-full px-3 py-2 rounded-xl input-box text-xs focus:outline-none focus:border-amber-400">
+                        <option value="">Todos los rubros (sin filtro)</option>
+                        <option value="Agricultura y agro">Agricultura y agro</option>
+                        <option value="Ganadería y producción animal">Ganadería y producción animal</option>
+                        <option value="Pesca y acuicultura">Pesca y acuicultura</option>
+                        <option value="Alimentos y bebidas">Alimentos y bebidas</option>
+                        <option value="Gastronomía y restaurantes">Gastronomía y restaurantes</option>
+                        <option value="Supermercados y almacenes">Supermercados y almacenes</option>
+                        <option value="Distribuidores y mayoristas">Distribuidores y mayoristas</option>
+                        <option value="Automotores y concesionarias">Automotores y concesionarias</option>
+                        <option value="Autopartes y talleres mecánicos">Autopartes y talleres mecánicos</option>
+                        <option value="Combustibles y estaciones de servicio">Combustibles y estaciones de servicio</option>
+                        <option value="Construcción y materiales">Construcción y materiales</option>
+                        <option value="Ferreterías">Ferreterías</option>
+                        <option value="Inmobiliarias y desarrolladoras">Inmobiliarias y desarrolladoras</option>
+                        <option value="Hotelería y turismo">Hotelería y turismo</option>
+                        <option value="Transporte, logística y correo">Transporte, logística y correo</option>
+                        <option value="Salud, clínicas y consultorios">Salud, clínicas y consultorios</option>
+                        <option value="Farmacias y perfumerías">Farmacias y perfumerías</option>
+                        <option value="Educación y capacitación">Educación y capacitación</option>
+                        <option value="Tecnología, software e internet">Tecnología, software e internet</option>
+                        <option value="Telecomunicaciones">Telecomunicaciones</option>
+                        <option value="Servicios financieros, bancos y seguros">Servicios financieros, bancos y seguros</option>
+                        <option value="Servicios profesionales, legales y contables">Servicios profesionales, legales y contables</option>
+                        <option value="Indumentaria y calzado">Indumentaria y calzado</option>
+                        <option value="Hogar, muebles y electrodomésticos">Hogar, muebles y electrodomésticos</option>
+                        <option value="Belleza, peluquería y estética">Belleza, peluquería y estética</option>
+                        <option value="Gimnasios y deportes">Gimnasios y deportes</option>
+                        <option value="Industria y manufactura">Industria y manufactura</option>
+                        <option value="Energía y minería">Energía y minería</option>
+                        <option value="Seguridad y limpieza">Seguridad y limpieza</option>
+                        <option value="Mascotas y veterinarias">Mascotas y veterinarias</option>
+                        <option value="Entretenimiento, medios y cultura">Entretenimiento, medios y cultura</option>
+                        <option value="Comercio electrónico">Comercio electrónico</option>
+                        <option value="Artesanías y productos regionales">Artesanías y productos regionales</option>
+                        <option value="Servicios para empresas">Servicios para empresas</option>
                     </select>
+                    <input type="text" id="rubroManual" list="rubrosSugeridos" autocomplete="off" oninput="actualizarConsultaFiltros()" placeholder="O escribí cualquier otro rubro" class="mt-2 w-full px-3 py-2 rounded-xl input-box text-xs focus:outline-none focus:border-amber-400">
+                    <datalist id="rubrosSugeridos">
+                        <option value="Agricultura y agro"><option value="Ganadería y producción animal"><option value="Pesca y acuicultura"><option value="Alimentos y bebidas"><option value="Gastronomía y restaurantes"><option value="Supermercados y almacenes"><option value="Distribuidores y mayoristas"><option value="Automotores y concesionarias"><option value="Autopartes y talleres mecánicos"><option value="Combustibles y estaciones de servicio"><option value="Construcción y materiales"><option value="Ferreterías"><option value="Inmobiliarias y desarrolladoras"><option value="Hotelería y turismo"><option value="Transporte, logística y correo"><option value="Salud, clínicas y consultorios"><option value="Farmacias y perfumerías"><option value="Educación y capacitación"><option value="Tecnología, software e internet"><option value="Telecomunicaciones"><option value="Servicios financieros, bancos y seguros"><option value="Servicios profesionales, legales y contables"><option value="Indumentaria y calzado"><option value="Hogar, muebles y electrodomésticos"><option value="Belleza, peluquería y estética"><option value="Gimnasios y deportes"><option value="Industria y manufactura"><option value="Energía y minería"><option value="Seguridad y limpieza"><option value="Mascotas y veterinarias"><option value="Entretenimiento, medios y cultura"><option value="Comercio electrónico"><option value="Artesanías y productos regionales"><option value="Servicios para empresas">
+                    </datalist>
+                    <p class="mt-1 text-[10px] text-slate-400">Elegí un rubro o escribí uno que no figure; “Todos” no aplica filtro de actividad.</p>
                 </div>
             </div>
 
@@ -208,7 +254,7 @@
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-indigo-400">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </div>
-                        <input type="text" id="searchInput" placeholder="Ej: Pizzerías en Mar del Plata, Empresas de transporte en Córdoba..." 
+                        <input type="text" id="searchInput" placeholder="Ej: Todos los rubros en Junín o empresas de transporte en Córdoba..." 
                             class="w-full pl-11 pr-4 py-3.5 text-sm sm:text-base rounded-xl input-box border-2 border-indigo-500/40 focus:outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-400/25 transition-all shadow-inner">
                     </div>
                     <button onclick="buscarEmpresas()" id="searchBtn" 
@@ -217,6 +263,7 @@
                         <span>Buscar Datos</span>
                     </button>
                 </div>
+                <p class="text-[10px] text-slate-400">Si dejás ambos filtros vacíos, busca empresas de todos los rubros en Argentina. Cada consulta devuelve hasta 8 resultados, no un padrón exhaustivo de empresas.</p>
 
                 <!-- Historial Reciente -->
                 <div id="searchHistoryContainer" class="hidden flex flex-wrap items-center gap-2 pt-2">
@@ -664,9 +711,15 @@
         }
 
         window.addEventListener('DOMContentLoaded', function() {
+            const inicioSplash = performance.now();
             cargarHistorialLocal();
             const theme = leerLocalStorage('app_theme', 'dark') || 'dark';
             setTheme(theme);
+            cargarLocalidadesArgentinas().finally(() => {
+                const esperaRestante = Math.max(0, 650 - (performance.now() - inicioSplash));
+                window.setTimeout(cerrarAppSplash, esperaRestante);
+            });
+            window.setTimeout(cerrarAppSplash, 2600);
         });
 
         function toggleTheme() {
@@ -690,15 +743,70 @@
             guardarLocalStorage('app_theme', theme);
         }
 
-        function actualizarConsultaFiltros() {
-            const prov = document.getElementById('selectProvincia').value;
-            const rubro = document.getElementById('selectRubro').value;
-            let queryAuto = "";
-            if (rubro) queryAuto += rubro;
-            if (prov) queryAuto += (queryAuto ? " en " : "") + prov;
-            if (queryAuto) {
-                document.getElementById('searchInput').value = queryAuto;
+        async function cargarLocalidadesArgentinas() {
+            const status = document.getElementById('localidadesStatus');
+            const datalist = document.getElementById('argentinaLocalidades');
+            try {
+                const respuesta = await fetch(new URL('./argentina-localidades.json', document.baseURI), { cache: 'force-cache' });
+                if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
+                const base = await respuesta.json();
+                const localidades = Array.isArray(base.localities) ? base.localities : [];
+                const fragment = document.createDocumentFragment();
+                const provincias = [...new Set(localidades.map(item => item.province).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'es'));
+                provincias.forEach(provincia => {
+                    const option = document.createElement('option');
+                    option.value = provincia;
+                    option.label = `${provincia} — provincia`;
+                    fragment.appendChild(option);
+                });
+                localidades.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = `${item.name}, ${item.province}`;
+                    option.label = `${item.name}${item.department ? ` · ${item.department}` : ''} — ${item.province}`;
+                    fragment.appendChild(option);
+                });
+                datalist.innerHTML = '';
+                datalist.appendChild(fragment);
+                if (status) status.textContent = `Base oficial Georef/INDEC: ${localidades.length.toLocaleString('es-AR')} localidades. También podés escribir cualquier zona.`;
+                const splashStatus = document.getElementById('splashStatus');
+                if (splashStatus) splashStatus.textContent = `${localidades.length.toLocaleString('es-AR')} localidades argentinas listas`;
+            } catch (error) {
+                console.warn('No se pudo cargar la lista local de localidades; se mantiene la entrada manual.', error);
+                if (status) status.textContent = 'No se pudo cargar el padrón; podés escribir manualmente cualquier ciudad, pueblo o zona.';
+                const splashStatus = document.getElementById('splashStatus');
+                if (splashStatus) splashStatus.textContent = 'Podés escribir la localidad manualmente';
             }
+        }
+
+        function obtenerConsultaFiltros() {
+            const localidad = document.getElementById('selectProvincia').value.trim();
+            const manualRubro = document.getElementById('rubroManual').value.trim();
+            const rubro = manualRubro || document.getElementById('selectRubro').value.trim();
+            if (rubro && localidad) return `${rubro} en ${localidad}`;
+            if (rubro) return `${rubro} en Argentina`;
+            if (localidad) return `Empresas y comercios de todos los rubros en ${localidad}`;
+            return '';
+        }
+
+        let ultimaConsultaAutomatica = '';
+        function actualizarConsultaFiltros() {
+            const queryInput = document.getElementById('searchInput');
+            const queryAuto = obtenerConsultaFiltros();
+            if (queryAuto) {
+                queryInput.value = queryAuto;
+                ultimaConsultaAutomatica = queryAuto;
+            } else if (ultimaConsultaAutomatica && queryInput.value === ultimaConsultaAutomatica) {
+                queryInput.value = '';
+                ultimaConsultaAutomatica = '';
+            }
+            return queryAuto;
+        }
+
+        function cerrarAppSplash() {
+            const splash = document.getElementById('appSplash');
+            if (!splash || splash.classList.contains('is-hidden')) return;
+            splash.classList.add('is-hidden');
+            window.setTimeout(() => splash.remove(), 500);
         }
 
         let cuitConsultaActual = '';
@@ -1188,9 +1296,9 @@
         async function buscarEmpresas(queryCustom = null) {
             const accessCode = document.getElementById('proxyAccessCode').value.trim();
             const queryInput = document.getElementById('searchInput');
-            const query = queryCustom || queryInput.value.trim();
+            const query = queryCustom || queryInput.value.trim() || obtenerConsultaFiltros() || 'Empresas y comercios de todos los rubros en Argentina';
 
-            if (queryCustom) queryInput.value = queryCustom;
+            if (queryCustom || !queryInput.value.trim()) queryInput.value = query;
 
             if (!accessCode) {
                 alert("⚠️ Ingresá el código de acceso al servicio en el panel superior.");
