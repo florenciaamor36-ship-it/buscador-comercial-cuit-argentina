@@ -354,6 +354,38 @@
         </div>
     </div>
 
+    <!-- MODAL: CONSULTA OFICIAL ARCA / BCRA -->
+    <div id="officialLookupModal" class="fixed inset-0 z-[70] hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass-panel modal-box w-full max-w-lg rounded-2xl border border-cyan-500/40 shadow-2xl overflow-hidden">
+            <div class="px-6 py-4 bg-slate-900/90 border-b border-cyan-500/30 flex justify-between items-center">
+                <div>
+                    <h3 id="officialLookupTitle" class="text-base font-extrabold text-white">Consulta oficial</h3>
+                    <p class="text-[11px] text-cyan-300">Datos consultados directamente en el organismo</p>
+                </div>
+                <button onclick="cerrarConsultaOficial()" class="p-2 rounded-lg bg-slate-800/80 text-slate-300 hover:text-white" aria-label="Cerrar">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <p id="officialLookupDescription" class="text-sm text-slate-200 leading-relaxed"></p>
+                <div class="rounded-xl border border-cyan-500/30 bg-cyan-950/30 p-4">
+                    <div class="text-[10px] uppercase tracking-wider text-slate-400">CUIT de este negocio</div>
+                    <div id="officialLookupCuit" class="mt-1 font-mono text-lg font-bold text-cyan-200"></div>
+                </div>
+                <p class="text-xs text-slate-400">El portal oficial puede pedir una verificación de seguridad. La app no solicita ni guarda tu clave fiscal.</p>
+                <div class="flex flex-wrap justify-end gap-2">
+                    <button onclick="copiarCuitLookup()" class="px-4 py-2 rounded-xl bg-indigo-900/80 text-indigo-200 text-xs font-bold">
+                        <i class="fa-solid fa-copy mr-1"></i> Copiar CUIT
+                    </button>
+                    <button id="officialLookupOpen" onclick="abrirPortalOficial()" class="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold">
+                        <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Abrir portal oficial
+                    </button>
+                    <button onclick="cerrarConsultaOficial()" class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL 2: NOTAS CRM Y SEGUIMIENTO PERSONAL -->
     <div id="crmModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
         <div class="glass-panel modal-box w-full max-w-lg rounded-2xl border border-indigo-500/40 shadow-2xl flex flex-col overflow-hidden">
@@ -616,6 +648,68 @@
             }
         }
 
+        let cuitConsultaActual = '';
+
+        function prepararConsultaOficial(tipo, cuitRaw) {
+            const cuit = String(cuitRaw || '').replace(/\D/g, '');
+            if (!/^\d{11}$/.test(cuit)) {
+                alert('Este negocio no tiene un CUIT válido para consultar.');
+                return;
+            }
+            const consultas = {
+                arca: {
+                    titulo: 'Estado administrativo de CUIT — ARCA',
+                    descripcion: 'La consulta oficial permite verificar el estado administrativo de la CUIT. El portal de ARCA pide ingresar el CUIT y completar un código de seguridad.',
+                    url: 'https://seti.afip.gob.ar/padron-puc-baja-oficio-internet/ConsultaCuitReactivadaAction.do'
+                },
+                bcra: {
+                    titulo: 'Central de Deudores — BCRA',
+                    descripcion: 'El informe oficial reúne financiaciones reportadas por entidades y cheques rechazados. No es un puntaje crediticio ni garantiza la solvencia de la empresa.',
+                    url: 'https://www.bcra.gob.ar/situacion-crediticia/'
+                }
+            };
+            const consulta = consultas[tipo];
+            if (!consulta) return;
+            cuitConsultaActual = cuit;
+            document.getElementById('officialLookupTitle').textContent = consulta.titulo;
+            document.getElementById('officialLookupDescription').textContent = consulta.descripcion;
+            document.getElementById('officialLookupCuit').textContent = `${cuit.slice(0, 2)}-${cuit.slice(2, 10)}-${cuit.slice(10)}`;
+            document.getElementById('officialLookupOpen').dataset.url = consulta.url;
+            document.getElementById('officialLookupModal').classList.remove('hidden');
+        }
+
+        async function copiarCuitLookup() {
+            if (!cuitConsultaActual) return;
+            let copiado = false;
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(cuitConsultaActual);
+                    copiado = true;
+                }
+            } catch (_) {}
+            if (!copiado) {
+                const campo = document.createElement('textarea');
+                campo.value = cuitConsultaActual;
+                campo.style.position = 'fixed';
+                campo.style.opacity = '0';
+                document.body.appendChild(campo);
+                campo.focus();
+                campo.select();
+                try { copiado = document.execCommand('copy'); } catch (_) {}
+                campo.remove();
+            }
+            mostrarToast(copiado ? 'CUIT copiado al portapapeles.' : 'Copiá el CUIT visible en el portal oficial.');
+        }
+
+        function abrirPortalOficial() {
+            const url = document.getElementById('officialLookupOpen').dataset.url;
+            if (url) window.location.href = url;
+        }
+
+        function cerrarConsultaOficial() {
+            document.getElementById('officialLookupModal').classList.add('hidden');
+        }
+
         function toggleMobileConfig() {
             document.getElementById('apiConfigPanel').classList.toggle('hidden');
         }
@@ -727,11 +821,12 @@
                 const keyEmpresa = `crm_note_${textoSeguro(item.nombre_comercial).replace(/[^a-zA-Z0-9]/g, '_')}`;
                 const notaGuardada = leerLocalStorage(keyEmpresa, '') || '';
                 const cuitClean = textoSeguro(item.cuit).replace(/[^0-9]/g, '');
+                const cuitVisible = cuitClean.length === 11 ? `${cuitClean.slice(0, 2)}-${cuitClean.slice(2, 10)}-${cuitClean.slice(10)}` : (item.cuit || 'No disponible');
                 const cuitLink = cuitClean.length === 11 ? `https://www.cuitonline.com/search.php?q=${cuitClean}` : `https://www.google.com/search?q=CUIT+${encodeURIComponent(item.razon_social || item.nombre_comercial)}`;
                 const nombreComercialHtml = escapeHtml(item.nombre_comercial || 'Sin Nombre');
                 const nombreTablaHtml = escapeHtml(item.nombre_comercial || '-');
                 const razonSocialHtml = escapeHtml(item.razon_social || '-');
-                const cuitHtml = escapeHtml(item.cuit || 'CUIT N/D');
+                const cuitHtml = escapeHtml(cuitVisible);
                 const direccionHtml = escapeHtml(item.direccion || '-');
                 const telefonoHtml = escapeHtml(item.telefono || '-');
                 const telefonoHref = escapeHtml(`tel:${textoSeguro(item.telefono).replace(/[^0-9+]/g, '')}`);
@@ -755,7 +850,7 @@
                         </div>
                     </div>
                     <a href="${cuitLinkHtml}" target="_blank" rel="noopener noreferrer" class="text-xs font-mono font-bold text-cyan-300 bg-cyan-950/80 px-2.5 py-1 rounded-md border border-cyan-500/30 flex items-center gap-1">
-                        ${cuitHtml} <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                        CUIT: ${cuitHtml} <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                     </a>
                 `;
 
@@ -766,6 +861,11 @@
                         <i class="fa-solid fa-id-card text-indigo-400 w-4"></i>
                         <span class="text-slate-400">Razón Social:</span>
                         <strong class="text-white">${razonSocialHtml}</strong>
+                    </div>
+                    <div class="flex items-center gap-2 text-slate-300">
+                        <i class="fa-solid fa-fingerprint text-cyan-400 w-4"></i>
+                        <span class="text-slate-400">CUIT:</span>
+                        <strong class="text-cyan-300 font-mono">${cuitHtml}</strong>
                     </div>
                     <div class="flex items-center gap-2 text-slate-300">
                         <i class="fa-solid fa-location-dot text-rose-400 w-4"></i>
@@ -798,9 +898,27 @@
                 btnCopiar.innerHTML = `<i class="fa-solid fa-copy"></i> Copiar`;
                 btnCopiar.onclick = () => copiarFichaEmpresa(item);
 
+                const btnArca = document.createElement('button');
+                btnArca.className = "px-3 py-1.5 rounded-lg bg-sky-900/60 text-sky-200 border border-sky-500/30 text-xs font-bold flex items-center gap-1 cursor-pointer";
+                btnArca.innerHTML = `<i class="fa-solid fa-building-columns"></i> ARCA`;
+                btnArca.title = "Consultar estado administrativo en el portal oficial (requiere CAPTCHA)";
+                btnArca.disabled = cuitClean.length !== 11;
+                if (btnArca.disabled) btnArca.classList.add('opacity-40', 'cursor-not-allowed');
+                btnArca.onclick = () => prepararConsultaOficial('arca', cuitClean);
+
+                const btnBcra = document.createElement('button');
+                btnBcra.className = "px-3 py-1.5 rounded-lg bg-emerald-900/60 text-emerald-200 border border-emerald-500/30 text-xs font-bold flex items-center gap-1 cursor-pointer";
+                btnBcra.innerHTML = `<i class="fa-solid fa-landmark"></i> BCRA`;
+                btnBcra.title = "Consultar Central de Deudores oficial (requiere CAPTCHA)";
+                btnBcra.disabled = cuitClean.length !== 11;
+                if (btnBcra.disabled) btnBcra.classList.add('opacity-40', 'cursor-not-allowed');
+                btnBcra.onclick = () => prepararConsultaOficial('bcra', cuitClean);
+
                 cardFooter.appendChild(btnInforme);
                 cardFooter.appendChild(btnCRM);
                 cardFooter.appendChild(btnCopiar);
+                cardFooter.appendChild(btnArca);
+                cardFooter.appendChild(btnBcra);
 
                 card.appendChild(cardHeader);
                 card.appendChild(cardBody);
@@ -822,7 +940,7 @@
                     <td class="px-5 py-4 text-slate-300">${razonSocialHtml}</td>
                     <td class="px-5 py-4 font-mono text-xs font-bold">
                         <a href="${cuitLinkHtml}" target="_blank" rel="noopener noreferrer" class="text-cyan-300 bg-cyan-950/80 px-2 py-1 rounded border border-cyan-500/30 hover:bg-cyan-900 transition inline-flex items-center gap-1">
-                            ${escapeHtml(item.cuit || '-')} <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                            CUIT: ${cuitHtml} <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                         </a>
                     </td>
                     <td class="px-5 py-4 text-slate-300">${direccionHtml}</td>
@@ -854,9 +972,27 @@
                 dtCopiar.title = "Copiar Ficha";
                 dtCopiar.onclick = () => copiarFichaEmpresa(item);
 
+                const dtArca = document.createElement('button');
+                dtArca.className = "px-2 py-1.5 rounded-lg bg-sky-900/60 text-sky-200 border border-sky-500/30 text-[10px] font-bold cursor-pointer";
+                dtArca.innerText = "ARCA";
+                dtArca.title = "Consultar estado de CUIT en ARCA (requiere CAPTCHA)";
+                dtArca.disabled = cuitClean.length !== 11;
+                if (dtArca.disabled) dtArca.classList.add('opacity-40', 'cursor-not-allowed');
+                dtArca.onclick = () => prepararConsultaOficial('arca', cuitClean);
+
+                const dtBcra = document.createElement('button');
+                dtBcra.className = "px-2 py-1.5 rounded-lg bg-emerald-900/60 text-emerald-200 border border-emerald-500/30 text-[10px] font-bold cursor-pointer";
+                dtBcra.innerText = "BCRA";
+                dtBcra.title = "Consultar Central de Deudores BCRA (requiere CAPTCHA)";
+                dtBcra.disabled = cuitClean.length !== 11;
+                if (dtBcra.disabled) dtBcra.classList.add('opacity-40', 'cursor-not-allowed');
+                dtBcra.onclick = () => prepararConsultaOficial('bcra', cuitClean);
+
                 actionsCell.appendChild(dtInforme);
                 actionsCell.appendChild(dtCRM);
                 actionsCell.appendChild(dtCopiar);
+                actionsCell.appendChild(dtArca);
+                actionsCell.appendChild(dtBcra);
             });
 
             // Escuchar cambios en los checkboxes de selección
